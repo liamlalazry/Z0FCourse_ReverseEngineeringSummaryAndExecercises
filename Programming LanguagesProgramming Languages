@@ -1,0 +1,41 @@
+###  Compiled languages -
+-  Translated directly into machine code 
+-  all the code gets to machine code then executed.
+-  the code is specific to a system 
+- the result is an executable file or elf in linux
+Advantages:
+- Fast
+- precise control on the hardware
+Disadvantages:
+- new compilation for each system 
+- small change a whole new compilation
+
+### Interpreted languages - interpreted/translated to machine code indirectly
+
+- each part or even individual lines is translated then executed
+- there is a translator software to translate the same code to multiple systems 
+- sometimes line line sometimes block block
+Advantages:
+- very versitaile code
+- faster development
+- not need hand compilation 
+- has a garbage collector in compae to compailed languages
+Disadvantages:
+- attend to be much because of runtime translation 
+-  compiler makes optimizations to the final code which interpreter just cant do due to his run time interpreting.
+
+### Intermidiate languages -compiled to ByteCode
+its a kind of binary/executable that a system will not understand but can be distributed then an enviroment needed to be installed to translate to your system.
+for example java language is translating code with environment called JRE - Java runtime environment which is the translator when excuting the program JVM - Java Virtual Machine (Part of JRE ) translates the bytecode to machine code that kind of compiler called JIT (Just In Time) compiler 
+### Compare to Interpreted language
+- Advantages: fast due to compilation before the running in compare to interpreted language like python. 
+- due to the running in JVM u can check security in there isolated environment but for python there is no isolated enviroment.   
+- On the Other Hand - interpreted languege (like python) is easier to debug ,dynamic typing, less infrastracure - less problems. 
+
+#### .NET 
+- similar to java
+- contain many languages but c# is the .NET language 
+- compiled into MSIL (Microsoft intemidiate language) similar to java bytecode 
+- MSIL get into run by CRT - Commin runtime language it contains garbage collector (cleaning from memory what has no use anymore like memory already used by variable which no longer exists), JIT Compailer ( like Java JRE )  & security staff. 
+### Python also has byte code and there is two main differences the way it interpret line-line or part part and that python ends with .py file while java or c# will end with executable.  
+[[Memory Layout]]
