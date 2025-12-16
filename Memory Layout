@@ -1,0 +1,41 @@
+#### The Segments 
+**Stack** - Holds non static local variables.
+**Heap** - contains dynamically allocated data that can be uniniatialized at first. 
+{dynamic alloacation is when program is asking for memory in her runtime by need and not up front.}
+**.data**  - Contains global and static data initialized to non zero value. 
+**.bss** - Contains global and static data uninitialized or initialized to 0
+**.text** - contains the code of the program
+![[Pasted image 20251216152634.png]]
+
+### The Stack 
+- Area in memory that can be used quickly for static data allocation. {static -data that has a known length such as an integer on the other hand Unless a maximum length is specified, user input should be stored on the heap because the data has a variable size.}
+- data is read and written as "last-in-first-out" (LIFO),**When data is pushed onto the stack, the stack grows up, ==towards lower memory addresses== and When data is popped off the stack, the stack shrinks down, towards higher addresses.**
+- address/location of the input will probably be stored on the stack for future reference.
+- The **stack pointer (RSP/ESP/SP)** is used to keep track of the top of the stack
+- **base pointer (RBP/EBP/BP)** is used to keep track of the base/bottom of the stack.
+### The Heap
+- used for dynamic allocation and it's a little slower to access than the stack
+- used for data that is dynamic (changing or unpredictable),f the size of the data isn't known at compile-time, it's usually stored on the heap
+- **When you add data to the heap it grows ==towards higher addresses==.**
+### Program Image
+-  This is the represention of a program in computer in runtime where the code and his items located in the memory its include the represention of all the segments. 
+#### TEB - Thread Environment Block stores info about the current running threads
+#### PEB - Process Environment Block stores information about the process and the loaded modules  
+for example one of the things PEB holding is the being debugged flag which can tell if something is being debugged (useful for malware to check it )
+![[Pasted image 20251216155155.png]] 
+In the diagram above, `stackVar1` was created before `stackVar2`, likewise for the heap variables.
+
+## Endianness
+
+there si 2 ways to store values in the memory big & little Endian 
+Big endian - most significant **byte** is stored in the first memory address 
+little indian - least significant **byte** is stored in the first memory address 
+for example: 0xABCDEFAC in the first adress
+we working with bytes so lets seperate it AB CD EF AC 
+in Big Endian -0000: AB CD EF AC is would be the order in the memory ending in 0004 
+in Little Endian -0000: AC EF CD AB is would be the order in the memory ending in 0004
+
+## RBP & RSP on x64
+On x64, it's common to see RBP used in a non-traditional way. Sometimes only RSP is used to point to data on the stack such as local variables and function parameters, and RBP is used for general data (similar to RAX). This will be discussed in further detail later.
+
+[[Windows x64 Calling Conventions]]
