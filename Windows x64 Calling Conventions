@@ -1,0 +1,89 @@
+There is a lot of ways to pass parameters to functions u can do it on the stack on diskwith registers the only thing u need to worrry about is that the function will know from where it getting his parameters when u using yourself functions its quite fine but when using libraryies it can be a mess for example a function that expecting registers and u pass througth the stack the order of the parameters when for example dividing ,who cleaning the stack the function or the caller? etc is all examples why we need calling conventions.
+**Terms**
+**callee** -the function that called 
+**caller** - thw function making the call
+
+###  Application Binary Interface (ABI)-
+The ABI defines various rules for programs like calling conventions parameter handling etc.
+# Fastcall
+- fastcall is the calling convention for windows x64 
+- It pushes function parameters backward (right to left) 
+it means that if a function is calling a b and c {function(a,b.c)} the fastcall feed the fuction c b and then a the last of the functions parameter is the first of fastcall letting her recieve.
+- The first four arguments/parameters are passed in registers.
+- Parameters that doesnt have a float value {float & double data types} passed with RCX RDX R8 R9 in that order {pointers, integers, booleans, chars, etc.}
+- Parameters that has float value will be passed with xmm0,xmm1.xmm2,xmm3 in that order 
+{eXtended MultiMedia register} 
+ - If the parameter being passed is too big to fit in a register then it is passed by reference. Parameters are never spread across multiple registers.
+ - Any other parameters are put on the stack.
+ **whats happends when we combile in a function both float and non-float values?**
+ so in the args of a function we determine the data type then we decide the registries to use by that and we take the one which is placed in coordinates of the specific argument for example for the fourth argument even if he is the only float in the function we would take xmm3
+ and the 5 one no matter float or not would be on the stack.
+
+## Shadow space
+- all parameters even if they passed with registers have a place in the stack reserved for them
+- even when no parameters are being passed there is always a 4 parameters place in the stack the compiler would often use it for something else if there are no parameters.
+- this space is called Shadow space or Home space and the x64 windows OS keeps 32bytes there before a function call.
+  SUB RSP, 0x20 is the shadow space making action as the stack going toward the lower addresses 
+- when a function returns a value , non float value its returned througth RAX and a float one Througth xmm0
+### Member functions 
+Member functions are functions that are in a struct or a class 
+**struct** - an object to store and use related data and functions it makes a structure that can be used over and over.for example car with data like speed or color i can make a blue one or black one but all cars will have a color, a speed etc which will be specified in the struct then a specific  car would be an instance of the struct we defined earlier.
+
+
+```c++
+struct Point {
+    int x, y;
+    void move(int dx, int dy) {
+        x += dx;
+        y += dy;
+    }
+};
+Point p;
+p.move(3, 4);
+
+```
+Class - have also private members meaning they cant be accessed out of the class
+
+```c++
+class Car {
+public:
+    int speed;
+    int fuel;
+
+    // Constructor
+    Car(int s, int f) {
+        speed = s;
+        fuel = f;
+    }
+
+    // Member function
+    void accelerate(int amount) {
+        speed += amount;
+        fuel -= amount;
+    }
+};
+
+```
+
+so at the struct example the function move is member function cause it is in the struct "Point" now heres the important part the first parameter of a struct is a **"this"** parameter which is a pointer "this" is pointing to the object where the function called heres so in our case it points toward p the instance of Point so the OS know what to change in the memory with the function executed on this instance.
+
+-  as we saw the first parameter passes with RCX so the "this" parameter is going on RCX.
+- The _caller_ is responsible for allocating space for parameters for the _callee_. The caller must always allocate space for 4 parameters even if no parameters are passed.
+- when a function called it will change registers value as it needs the registers RAX, RCX, RDX, R8, R9, R10, R11 considers volatile.
+**volatile** - meaning the caller has to save his data that stored on them before calling the calle 
+- On the other hand The registers RBX, RBP, RDI, RSI, RSP, R12, R13, R14,R15 are consider non-volatile 
+- **Non-volatile** -registers that when function is called and uses them its her responsibility to keep the data in them as it was.
+**Whats the difference ?** 
+the registers that non volatile are mostly storing stable values like addresses pointers bp for base of the stack its important to take the time and save them but the volatile ones changes a lot and its more rare that we would want to save their value and waste time on it.
+
+### Stack Access
+-  The first four arguments are passed via registers, the rest are pushed onto the stack starting at **offset RSP+0x20. This makes RSP+0x20 the fifth argument and RSP+0x28 the sixth.**
+- **Important point** - when a function called it saves the return address on the stack which the RSP points on to it but the address is only 8 bytes long from reasons of CPU speed the cpu needs addresses which aligned to 16 which means the address needs to be divided in 16 with no remainder but if the address is 8 bytes this breaks the alignment so the os skips 8 addresses to maintain this alignment so if u would see after call a sub  rsp,8 u would understand why. 
+
+# cdecl
+another calling convencion like  fastcall
+- parameters are passed on the stack backwards (right to left)
+- RBP is saved so it can be restored in case.
+- return value passed to EAX
+- **caller clean the stack** - because of that cdcel allow variable number of parameters
+- 
