@@ -1,0 +1,12 @@
+**DLL** -  a library of code which is written seperatly from the program using it,the program using it can share it with other programs what makes it decrease the size of programs that now shares the memory togheter.
+**Static library** - connected to the program which using it, cant be used by multiple programs at same time.
+
+### DumpBin 
+- Tool thats comes with visual studio helps us to find exports in the dll 
+- Available in dev command prompt with this syntax : _dumpbin DLL.dll /EXPORTS_ another popular tool is called **Dependecy Walker**.
+- ![[Pasted image 20251218170823.png]]
+Function overloading - helps for functions with the same name to do diffrent things for eample adding floats and adding integers with function called add() but sense the signature is differ the compiler knows the diffrence and the signature  is differ cause of the arguments number or types
+
+Name Mangling in assembly there cant be function overload two functions cant have the same name even in c++ it can have as we saw the solution is a special inside name for the function which is called in assembly this is mangling making this weird name for same named functions
+
+Demangling - the ability to reverse back the mangling made by the compailer to get more readable name.
